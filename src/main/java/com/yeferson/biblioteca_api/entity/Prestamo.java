@@ -1,5 +1,6 @@
 package com.yeferson.biblioteca_api.entity;
 
+import com.yeferson.biblioteca_api.enums.EstadoPrestamo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,9 @@ public class Prestamo {
     private LocalDate fechaPrestamo;
 
     private LocalDate fechaDevolucion;
+
+    @Enumerated(EnumType.STRING)
+    private EstadoPrestamo estado;
 
     @ManyToOne
     @JoinColumn(name = "libro_id")
