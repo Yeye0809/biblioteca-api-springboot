@@ -16,6 +16,7 @@ public class CategoriaServiceImpl  implements CategoriaService{
         this.categoriaRepository = categoriaRepository;
     }
 
+    @Override
     public CategoriaResponseDTO saveCategoria(CategoriaRequestDTO dto){
         Categoria categoria = new Categoria();
         categoria.setNombre(dto.getNombre());
