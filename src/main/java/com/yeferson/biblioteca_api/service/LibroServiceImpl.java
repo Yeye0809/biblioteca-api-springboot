@@ -49,4 +49,31 @@ public class LibroServiceImpl implements LibroService{
     public List<LibroResponseDTO> getLibros(){
         return libroRepository.findAll().stream().map(LibroMapper::toDto).toList();
     }
+
+    @Override
+    public LibroResponseDTO getLibroById(Long id){
+        Libro libro = libroRepository.findById(id).orElseThrow(()-> new RuntimeException("Libro no encontrado"));
+
+        return LibroMapper.toDto(libro);
+    }
+
+    @Override
+    public LibroResponseDTO updateLibro(Long id, LibroRequestDTO dto){
+        Autor autor = autorRepository.findById(dto.getAutorId()).orElseThrow(()-> new RuntimeException("Autor no encontrado"));
+        Categoria categoria = categoriaRepository.findById(dto.getCategoriaId()).orElseThrow(()-> new RuntimeException("categoria no encontrada"));
+        Libro libro = libroRepository.findById(id).orElseThrow(()-> new RuntimeException("Libro no encontrado"));
+        libro.setTitulo(dto.getTitulo());
+        libro.setAnioPublicacion(dto.getAnioPublicacion());
+        libro.setAutor(autor);
+        libro.setCategoria(categoria);
+
+        Libro libroUpdate = libroRepository.save(libro);
+
+        return LibroMapper.toDto(libroUpdate);
+    }
+
+    @Override
+    public List<LibroResponseDTO> getLibroByCategoriaId(Long id){
+        return libroRepository.getLibroByCategoriaId(id).stream().map(LibroMapper::toDto).toList();
+    }
 }

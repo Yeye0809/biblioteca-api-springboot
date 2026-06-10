@@ -27,4 +27,19 @@ public class LibroController {
     public ResponseEntity<List<LibroResponseDTO>> getLibros(){
         return ResponseEntity.ok(libroService.getLibros());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<LibroResponseDTO> getLibroById(@PathVariable Long id){
+        return ResponseEntity.ok(libroService.getLibroById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<LibroResponseDTO> updateLibro(@PathVariable Long id, @RequestBody LibroRequestDTO dto){
+        return ResponseEntity.ok(libroService.updateLibro(id, dto));
+    }
+
+    @GetMapping("/categoria/{id}")
+    public ResponseEntity<List<LibroResponseDTO>> getLibroByCategoriaId(@PathVariable Long id){
+        return ResponseEntity.ok(libroService.getLibroByCategoriaId(id));
+    }
 }
