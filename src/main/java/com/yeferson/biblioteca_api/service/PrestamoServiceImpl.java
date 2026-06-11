@@ -14,6 +14,7 @@ import com.yeferson.biblioteca_api.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class PrestamoServiceImpl implements PrestamoService{
@@ -48,6 +49,19 @@ public class PrestamoServiceImpl implements PrestamoService{
         Prestamo prestamoSave = prestamoRepository.save(prestamo);
 
         return PrestamoMapper.toDto(prestamoSave);
+    }
+
+    @Override
+    public List<PrestamoResponseDTO> getPrestamos(){
+        return prestamoRepository.findAll().stream().map(PrestamoMapper::toDto).toList();
+    }
+
+    @Override
+    public void devolverLibro(Long id){
+        Prestamo prestamo = prestamoRepository.findById(id).orElseThrow(()-> new RuntimeException("prestamo no encontrado"));
+        prestamo.setEstado(EstadoPrestamo.DEVUELTO);
+        Libro libro = prestamo.getLibro();
+        libro.setEstado(EstadoLibro.DISPONIBLE);
 
     }
 }

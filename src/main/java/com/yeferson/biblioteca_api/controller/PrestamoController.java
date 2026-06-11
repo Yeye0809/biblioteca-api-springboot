@@ -4,10 +4,9 @@ import com.yeferson.biblioteca_api.DTO.PrestamoRequestDTO;
 import com.yeferson.biblioteca_api.DTO.PrestamoResponseDTO;
 import com.yeferson.biblioteca_api.service.PrestamoService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/prestamos")
@@ -22,5 +21,10 @@ public class PrestamoController {
     @PostMapping
     public ResponseEntity<PrestamoResponseDTO> savePrestamo(@RequestBody PrestamoRequestDTO dto){
         return ResponseEntity.ok(prestamoService.savePrestamo(dto));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PrestamoResponseDTO>> getPrestamos(){
+        return ResponseEntity.ok(prestamoService.getPrestamos());
     }
 }
