@@ -7,6 +7,7 @@ import com.yeferson.biblioteca_api.entity.Autor;
 import com.yeferson.biblioteca_api.entity.Categoria;
 import com.yeferson.biblioteca_api.entity.Libro;
 import com.yeferson.biblioteca_api.enums.EstadoLibro;
+import com.yeferson.biblioteca_api.exception.LibroNoEncontrado;
 import com.yeferson.biblioteca_api.mapper.LibroMapper;
 import com.yeferson.biblioteca_api.repository.AutorRepository;
 import com.yeferson.biblioteca_api.repository.CategoriaRepository;
@@ -52,7 +53,7 @@ public class LibroServiceImpl implements LibroService{
 
     @Override
     public LibroResponseDTO getLibroById(Long id){
-        Libro libro = libroRepository.findById(id).orElseThrow(()-> new RuntimeException("Libro no encontrado"));
+        Libro libro = libroRepository.findById(id).orElseThrow(()-> new LibroNoEncontrado("Libro con el Id " + id + " no encontrado"));
 
         return LibroMapper.toDto(libro);
     }
